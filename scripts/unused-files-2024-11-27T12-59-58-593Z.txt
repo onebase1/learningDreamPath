@@ -1,0 +1,126 @@
+\middleware.ts:15 - default
+\middleware.ts:25 - config
+\components\ConfirmChapters.tsx:107 - default
+\components\CourseSideBar.tsx:50 - default
+\components\CreatePracticeTestForm.tsx:105 - default
+\components\Cta.tsx:26 - default
+\components\Footer.tsx:42 - default
+\components\Hero.tsx:26 - default
+\components\MoreInfoModal.tsx:81 - default
+\components\Pricing.tsx:164 - default
+\components\Providers.tsx:10 - Provider
+\components\SignInButton.tsx:21 - default
+\components\Student.tsx:31 - default
+\components\SubscriptionButton.tsx:28 - default
+\components\Teachers.tsx:51 - default
+\components\ThemeToggle.tsx:15 - ThemeToggle
+\components\UserAccountNav.tsx:54 - default
+\components\Values.tsx:41 - default
+\lib\gemini.ts:29 - chatSession
+\lib\uploadthing.ts:5 - UploadButton
+\lib\uploadthing.ts:5 - Uploader
+\app\(dashboard)\layout.tsx:24 - default
+\components\ui\alert-dialog.tsx:131 - AlertDialogPortal (used in module)
+\components\ui\alert-dialog.tsx:132 - AlertDialogOverlay (used in module)
+\components\ui\badge.tsx:26 - BadgeProps (used in module)
+\components\ui\badge.tsx:36 - badgeVariants (used in module)
+\components\ui\button.tsx:37 - ButtonProps (used in module)
+\components\ui\command.tsx:147 - CommandDialog (used in module)
+\components\ui\command.tsx:153 - CommandShortcut (used in module)
+\components\ui\command.tsx:154 - CommandSeparator (used in module)
+\components\ui\dialog.tsx:113 - DialogPortal (used in module)
+\components\ui\dialog.tsx:114 - DialogOverlay (used in module)
+\components\ui\dialog.tsx:115 - DialogClose (used in module)
+\components\ui\dialog.tsx:116 - DialogTrigger (used in module)
+\components\ui\dialog.tsx:119 - DialogFooter (used in module)
+\components\ui\dropdown-menu.tsx:189 - DropdownMenuCheckboxItem (used in module)
+\components\ui\dropdown-menu.tsx:190 - DropdownMenuRadioItem (used in module)
+\components\ui\dropdown-menu.tsx:191 - DropdownMenuLabel (used in module)
+\components\ui\dropdown-menu.tsx:193 - DropdownMenuShortcut (used in module)
+\components\ui\dropdown-menu.tsx:194 - DropdownMenuGroup (used in module)
+\components\ui\dropdown-menu.tsx:195 - DropdownMenuPortal (used in module)
+\components\ui\dropdown-menu.tsx:196 - DropdownMenuSub (used in module)
+\components\ui\dropdown-menu.tsx:197 - DropdownMenuSubContent (used in module)
+\components\ui\dropdown-menu.tsx:198 - DropdownMenuSubTrigger (used in module)
+\components\ui\dropdown-menu.tsx:199 - DropdownMenuRadioGroup (used in module)
+\components\ui\form.tsx:168 - useFormField (used in module)
+\components\ui\input.tsx:5 - InputProps (used in module)
+\components\ui\progress.tsx:24 - ProgressProps (used in module)
+\components\ui\radio-group.tsx:44 - RadioGroup (used in module)
+\components\ui\radio-group.tsx:44 - RadioGroupItem (used in module)
+\components\ui\sheet.tsx:138 - SheetClose (used in module)
+\components\ui\sheet.tsx:140 - SheetHeader (used in module)
+\components\ui\sheet.tsx:141 - SheetFooter (used in module)
+\components\ui\sheet.tsx:142 - SheetTitle (used in module)
+\components\ui\sheet.tsx:143 - SheetDescription (used in module)
+\components\ui\table.tsx:109 - TableFooter (used in module)
+\components\ui\table.tsx:113 - TableCaption (used in module)
+\components\ui\textarea.tsx:5 - TextareaProps (used in module)
+\components\ui\toast.tsx:128 - ToastAction (used in module)
+\components\ui\toaster.tsx:13 - Toaster
+\components\ui\use-toast.ts:77 - reducer (used in module)
+\components\ui\use-toast.ts:194 - toast (used in module)
+\.next\types\app\layout.ts:49 - PageProps
+\.next\types\app\layout.ts:53 - LayoutProps (used in module)
+\app\api\courses\route.ts:7 - POST
+\app\api\interview\route.ts:6 - POST
+\app\api\uploadthing\core.ts:26 - satisfies
+\app\api\uploadthing\core.ts:26 - FileRouter (used in module)
+\app\api\uploadthing\route.ts:6 - GET
+\app\api\uploadthing\route.ts:6 - POST
+\app\api\webhook\route.ts:8 - POST
+\app\(course)\courses\[courseId]\page.tsx:32 - default
+\app\(dashboard)\(routes)\(root)\page.tsx:10 - default
+\app\(dashboard)\(routes)\interview\loading.tsx:23 - default
+\app\(dashboard)\(routes)\interview\page.tsx:6 - default
+\app\(dashboard)\(routes)\search\page.tsx:53 - default
+\app\(dashboard)\(routes)\teacher\layout.tsx:19 - default
+\app\api\courses\[courseId]\route.ts:12 - DELETE
+\app\api\courses\[courseId]\route.ts:60 - PATCH
+\app\(course)\courses\[courseId]\_components\MCQResults.tsx:201 - default
+\app\(course)\courses\[courseId]\_components\StartCourseButton.tsx:14 - StartCourseButton
+\app\(course)\courses\[courseId]\_components\types.ts:15 - JsonValue (used in module)
+\app\(course)\courses\[courseId]\_components\types.ts:32 - MCQAnswerReviewProps
+\app\(course)\courses\[courseId]\start\layout.tsx:61 - default
+\app\(course)\courses\[courseId]\start\page.tsx:46 - default
+\app\(dashboard)\(routes)\teacher\analytics\page.tsx:42 - default
+\app\(dashboard)\(routes)\teacher\courses\page.tsx:32 - default
+\app\(dashboard)\(routes)\teacher\create\page.tsx:109 - default
+\app\api\courses\[courseId]\attachments\route.ts:6 - POST
+\app\api\courses\[courseId]\chapters\route.ts:6 - POST
+\app\api\courses\[courseId]\checkout\route.ts:8 - POST
+\app\api\courses\[courseId]\publish\route.ts:6 - PATCH
+\app\api\courses\[courseId]\start-attempt\route.ts:6 - POST
+\app\api\courses\[courseId]\unpublish\route.ts:6 - PATCH
+\.next\types\app\(course)\courses\[courseId]\layout.ts:49 - PageProps
+\.next\types\app\(course)\courses\[courseId]\layout.ts:53 - LayoutProps (used in module)
+\app\(dashboard)\(routes)\teacher\coursegen\create\loading.tsx:14 - default
+\app\(dashboard)\(routes)\teacher\coursegen\create\page.tsx:31 - default
+\app\(dashboard)\(routes)\teacher\courses\[courseId]\page.tsx:179 - default
+\app\api\courses\[courseId]\attachments\[attachmentId]\route.ts:6 - DELETE
+\app\api\courses\[courseId]\chapters\[chapterId]\route.ts:12 - DELETE
+\app\api\courses\[courseId]\chapters\[chapterId]\route.ts:93 - PATCH
+\app\api\courses\[courseId]\chapters\reorder\route.ts:6 - PUT
+\.next\types\app\(course)\courses\[courseId]\results\page.ts:49 - PageProps (used in module)
+\.next\types\app\(course)\courses\[courseId]\results\page.ts:53 - LayoutProps
+\.next\types\app\api\courses\[courseId]\finish\route.ts:309 - PageProps
+\.next\types\app\api\courses\[courseId]\finish\route.ts:313 - LayoutProps
+\app\(course)\courses\[courseId]\chapters\[chapterId]\_components\DescriptionCard.tsx:20 - default
+\app\(course)\courses\[courseId]\chapters\[chapterId]\_components\FooterCard.tsx:16 - default
+\app\(course)\courses\[courseId]\chapters\[chapterId]\_components\InstructionsCard.tsx:20 - default
+\app\(course)\courses\[courseId]\chapters\[chapterId]\_components\PartBQuizCard.tsx:52 - default
+\app\(course)\courses\[courseId]\chapters\[chapterId]\_components\PopUp.tsx:58 - default
+\app\(course)\courses\[courseId]\chapters\[chapterId]\_components\QuizCards.tsx:102 - default
+\app\(course)\courses\[courseId]\chapters\[chapterId]\_components\ReadingSectionInstructions.tsx:49 - default
+\app\(dashboard)\(routes)\teacher\coursegen\create\[couseId]\loading.tsx:14 - default
+\app\api\courses\[courseId]\chapters\[chapterId]\accept-terms\route.ts:7 - POST
+\app\api\courses\[courseId]\chapters\[chapterId]\publish\route.ts:6 - PATCH
+\app\api\courses\[courseId]\chapters\[chapterId]\save-temporary-answer\route.ts:7 - POST
+\app\api\courses\[courseId]\chapters\[chapterId]\unpublish\route.ts:6 - PATCH
+\.next\types\app\(course)\courses\[courseId]\chapters\[chapterId]\page.ts:49 - PageProps (used in module)
+\.next\types\app\(course)\courses\[courseId]\chapters\[chapterId]\page.ts:53 - LayoutProps
+\app\(dashboard)\(routes)\teacher\courses\[courseId]\chapters\[chapterId]\page.tsx:143 - default
+\.next\types\app\api\courses\[courseId]\chapters\[chapterId]\progress\route.ts:309 - PageProps
+\.next\types\app\api\courses\[courseId]\chapters\[chapterId]\progress\route.ts:313 - LayoutProps
+\.next\types\app\api\courses\[courseId]\chapters\[chapterId]\temporary-answer\route.ts:309 - PageProps
+\.next\types\app\api\courses\[courseId]\chapters\[chapterId]\temporary-answer\route.ts:313 - LayoutProps

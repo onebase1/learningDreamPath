@@ -1,0 +1,70 @@
+export const metadata = {
+  title: 'User Guidelines',
+  lastUpdated: 'February 17, 2025'
+}
+
+# User Guidelines
+
+<CustomAlert title="Community Standards" variant="info">
+  These guidelines ensure a safe and productive learning environment for all users.
+</CustomAlert>
+
+## Platform Usage
+
+### 1. General Principles
+
+<Card className="p-4">
+#### Core Values
+- Respect for all users
+- Academic integrity
+- Professional conduct
+- Collaborative learning
+- Constructive feedback
+</Card>
+
+### 2. Content Standards
+
+Users must ensure all content, including submissions and comments:
+- Is appropriate and relevant
+- Respects intellectual property rights
+- Does not contain offensive material
+- Maintains academic integrity
+
+<CustomAlert title="Academic Integrity" variant="warning">
+  Plagiarism and cheating are strictly prohibited and may result in account suspension.
+</CustomAlert>
+
+### 3. Communication Guidelines
+
+When interacting on the platform:
+- Be respectful and professional
+- Use appropriate language
+- Avoid spam or promotional content
+- Report inappropriate behavior
+
+### 4. Technical Requirements
+
+<Card className="p-4 bg-gray-50">
+#### Recommended Setup
+- Stable internet connection
+- Updated web browser
+- Webcam for video sessions
+- Microphone for audio recording
+- PDF viewer for course materials
+</Card>
+
+### 5. Assessment Rules
+
+When taking assessments:
+- Complete work independently
+- Follow time limits
+- Use only allowed resources
+- Report technical issues promptly
+
+
+
+export default ({ children }) => (
+  <div className="guidelines-content">
+    {children}
+  </div>
+);

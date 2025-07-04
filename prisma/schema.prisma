@@ -1,0 +1,459 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Course {
+  id              String         @id @default(uuid())
+  userId          String
+  title           String
+  totalQuestions  Int            @default(0)
+  timeLimit       Int            @default(0)
+  attempts        Int            @default(0)
+  description     String?
+  imageUrl        String?
+  price           Float?
+  planTier        PlanTier?      @default(FREE)
+  isPublished     Boolean        @default(false)
+  categoryId      String?
+  category        Category?      @relation(fields: [categoryId], references: [id])
+  userAnswers     UserAnswer[]
+  chapters        Chapter[]
+  attachments     Attachment[]
+  purchases       Purchase[]
+  courseProgress  CourseProgress[]
+  attemptHistory  AttemptHistory[]
+  betaFeedback    BetaFeedback[] // Keep this relation
+  feedback        Feedback[]
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([categoryId])
+}
+
+model BetaFeedback {
+  id              String         @id @default(uuid())
+  userId          String
+  courseId        String
+  feedbackType    String         // "bug" | "feature" | "experience"
+  content         String
+  rating          Int?
+  course          Course         @relation(fields: [courseId], references: [id], onDelete: Cascade) // This line is correct
+  createdAt       DateTime       @default(now())
+}
+
+  model Chapter {
+    id                 String         @id @default(uuid())
+    title              String
+    description        String?
+    options            Json?
+    answer             String?
+    imageUrl           String?
+    pdfUrl             String?
+    videoUrl           String?
+    patientName        String?
+    timeLimit          Int            @default(0)
+    position           Int
+    partType           String?    // "reading-a" | "reading-b" | "reading-c"
+    subPart            String?    // For Part B: "q1" to "q6", Part C: "sec1" | "sec2"
+    youtubeSearchQuery String?
+    isPublished        Boolean        @default(false)
+    isFree             Boolean        @default(false)
+
+    muxData            MuxData?
+
+    courseId           String
+    course             Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+    questions          Question[]
+    userAnswers        UserAnswer[]
+    userProgress       UserProgress[]
+    purchases          Purchase[]
+
+    createdAt          DateTime       @default(now())
+    updatedAt          DateTime       @updatedAt
+
+    @@index([courseId])
+    @@index([position, partType])
+  }
+
+  model CourseProgress {
+    id             String   @id @default(uuid())
+    userId         String
+    courseId       String
+    course         Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    score          Float
+    attempts       Int      @default(0)
+    isCompleted Boolean @default(false)
+    lastAttemptDate DateTime?
+    lastKnownState  Json?
+    scaledScore     Float?   // For 0-500 score
+    grade           String?  // For A, B, C+, C, D, E
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+
+    @@unique([userId, courseId])
+    @@index([courseId])
+  }
+
+  model UserAnswer {
+    id          String   @id @default(uuid())
+    userId      String
+    chapterId   String
+    chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+    questionId  String
+    answer      String    
+    feedback    String?
+    isTemporary Boolean  @default(true)
+    attemptNumber Int @default(1)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    courseId    String?
+    course      Course?  @relation(fields: [courseId], references: [id])
+
+    @@unique([userId, chapterId, questionId, attemptNumber])
+    @@index([chapterId])
+    @@index([courseId])
+    @@index([attemptNumber])
+  }
+
+  model MuxData {
+    id         String   @id @default(uuid())
+    assetId    String
+    playbackId String?
+
+    chapterId String  @unique
+    chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  }
+
+  model Category {
+    id      String   @id @default(uuid())
+    name    String   @unique
+    type    String?   // "reading-a" | "reading-bc" | "reading-complete" | "listening"
+    courses Course[]
+  }
+
+  model Attachment {
+    id       String   @id @default(uuid())
+    name     String
+    url      String
+
+    courseId String
+    course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([courseId])
+  }
+
+  model UserProgress {
+    id            String   @id @default(uuid())
+    userId        String
+
+    chapterId     String
+    timeRemaining Int?
+    chapter       Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+    isCompleted   Boolean @default(false)
+
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    termsAccepted Boolean @default(false)
+
+    @@index([chapterId])
+    @@unique([userId, chapterId])
+  }
+
+  model Purchase {
+    id         String   @id @default(uuid())
+    userId     String
+    courseId   String
+    course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    chapterId  String?
+    chapter    Chapter? @relation(fields: [chapterId], references: [id])
+
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    @@unique([userId, courseId])
+    @@index([courseId])
+  }
+
+  model StripeCustomer {
+    id               String   @id @default(uuid())
+    userId           String   @unique
+    stripeCustomerId String   @unique
+
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+  }
+
+  model Game {
+    id              String     @id @default(uuid())
+    userId          String
+    topicShort      String
+    topic           String
+    ruleId          String
+    partType        String
+    audioUrl        String?
+    script          String?
+    imageUrl        String?
+    pdfUrl          String?
+    topicShortUrl   String?
+    timeStarted     DateTime   @default(now())
+    timeEnded       DateTime?
+    gameType        GameType
+    user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    questions       Question[]
+    practiceTestId  String?    // Add this line
+    practiceTest    PracticeTest? @relation(fields: [practiceTestId], references: [id]) // Add this line
+
+    createdAt       DateTime   @default(now())
+    updatedAt       DateTime   @updatedAt
+
+    @@index([userId])
+  }
+
+
+
+  model Question {
+    id                String    @id @default(uuid())
+    chapterId         String?
+    chapter           Chapter?  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+    question          String
+    section           Int?
+    section_order     Int?
+    imageUrl          String?
+    answer            String
+    gameId            String?
+    options           Json?
+    percentageCorrect Float?
+    isCorrect         Boolean?
+    questionType      GameType
+    userAnswer        String?
+    subtopic          String?
+    fullText          String?
+    full_text         String?
+    merged_content_id String?
+    questionNumber    Int?
+
+    game              Game?     @relation(fields: [gameId], references: [id])
+
+    createdAt         DateTime  @default(now())
+    updatedAt         DateTime  @updatedAt
+    
+    @@index([chapterId])
+    @@index([section, section_order])
+    @@index([gameId])
+  }
+
+  enum GameType {
+    mcq
+    open_ended
+  }
+
+  model PracticeTest {
+    id            String   @id @default(cuid())
+    name          String
+    Part          Part[]
+    games         Game[] 
+  }
+
+  model Part {
+    id            String   @id @default(cuid())
+    practiceTestId String
+    partType      String
+    practiceTest  PracticeTest @relation(fields: [practiceTestId], references: [id])
+    Rule          Rule[]
+  }
+
+  model Rule {
+    id            String @id @default(cuid())
+    name          String
+    description   String
+    partId        String
+    instructions  String?
+    header        String?
+    footer        String?
+    part          Part @relation(fields: [partId], references: [id])
+  }
+
+  model User {
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    credits       Int?      @default(1000)
+    image         String?
+    games         Game[]
+    accounts      Account[]
+    sessions      Session[]
+  }
+
+  model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+    @@index([userId])
+  }
+
+  model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+  }
+
+  model MockInterview {
+    id              Int      @id @default(autoincrement())
+    mockId          String   @unique @default(uuid()) // Automatically generates a UUID
+    jsonMockResp    Json
+    jobPosition     String
+    jobDesc         String
+    jobExperience   Int
+    createdBy       String
+    createdAt       DateTime @default(now())
+    
+  }
+
+  model AttemptHistory {
+    id            String    @id @default(uuid())
+    userId        String
+    courseId      String
+    course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    attemptNumber Int
+    score         Float     @default(0)
+    startedAt     DateTime  @default(now())
+    completedAt   DateTime?
+    
+    @@unique([userId, courseId, attemptNumber])
+    @@index([courseId])
+  }
+
+// Add this to your schema.prisma
+model Subscription {
+  id                  String    @id @default(uuid())
+  userId              String    @unique
+  status              String    // 'active', 'trialing', 'canceled'
+  planId              String    // 'free', 'basic', 'pro', 'premium'
+  stripeSubscriptionId String?  @unique  // Make it optional with String?
+  currentPeriodStart  DateTime  @default(now())
+  currentPeriodEnd    DateTime?
+  cancelAtPeriodEnd   Boolean   @default(false)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+model WaitList {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  inviteCode  String?
+  isInvited   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+
+model Feedback {
+  id          String   @id @default(uuid())
+  userId      String
+  courseId    String
+  rating      Int      @default(0)
+  content     String
+  feedbackType String  // "course" | "feature" | "bug"
+  course      Course   @relation(fields: [courseId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([courseId])
+}
+
+model Analytics {
+  id        String   @id @default(uuid())
+  userId    String
+  eventType String
+  metadata  Json
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([eventType])
+}
+
+model CreditUsage {
+  id          String   @id @default(uuid())
+  userId      String
+  courseId    String
+  creditsUsed Int?
+  usageType   String
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([courseId])
+}
+
+model CreditPurchase {
+  id            String   @id @default(uuid())
+  userId        String
+  packageId     String
+  creditsAmount Int?
+  amountPaid    Float
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+}
+
+model CourseResults {
+  id          String   @id @default(uuid())
+  userId      String
+  courseId    String
+  attempt     Int
+  score       Float
+  rawScore    Int
+  totalQuestions Int
+  completedAt DateTime @default(now())
+
+  @@unique([userId, courseId, attempt])  // Ensures each attempt is stored separately
+}
+
+
+model UserCourse {
+  id         String   @id @default(uuid())
+  userId     String
+  courseId   String
+  status     String   // e.g., "in-progress", "completed", "autoCompleted"
+  retryCount Int      @default(0)
+  lastAttempt DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
+
+enum PlanTier {
+  FREE
+  BASIC
+  PRO
+  PREMIUM
+}
