@@ -13,6 +13,39 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.clerk.dev *.stripe.com *.uploadthing.com *.mux.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: blob: *.supabase.co *.uploadthing.com *.clerk.dev *.stripe.com *.mux.com; connect-src 'self' *.clerk.dev *.stripe.com *.supabase.co *.uploadthing.com *.mux.com *.openai.com; media-src 'self' *.mux.com *.uploadthing.com; frame-src 'self' *.stripe.com *.clerk.dev;"
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block'
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
+          }
+        ]
+      }
+    ]
+  },
   images: {
     remotePatterns: [
       {
@@ -64,10 +97,10 @@ const nextConfig = {
     ];
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false, // Enable ESLint checking
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false, // Enable TypeScript error checking
   },
   output: "standalone",
   webpack(config) {

@@ -1,13 +1,44 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { contactRateLimit } from '@/lib/rate-limit'
 
 // Initialize Resend with your API key
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  // Apply rate limiting
+  const rateLimitResponse = contactRateLimit(request);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
   try {
     const body = await request.json()
     const { firstName, lastName, email, subject, message } = body
+
+    // Input validation
+    if (!firstName || !lastName || !email || !subject || !message) {
+      return NextResponse.json(
+        { error: 'All fields are required' },
+        { status: 400 }
+      )
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
+        { status: 400 }
+      )
+    }
+
+    // Length validation
+    if (message.length > 1000) {
+      return NextResponse.json(
+        { error: 'Message too long (max 1000 characters)' },
+        { status: 400 }
+      )
+    }
 
     // Send notification to support team
     await resend.emails.send({
